@@ -41,12 +41,28 @@
         </v-flex>
       </v-layout>
       <v-list>
-        <v-list-item v-for="link in links" :key="link.text" route :to="link.route" class="indigo--text">
+        <v-list-item router-link to="/admin" class="indigo--text">
           <v-list-item-icon>
-            <v-icon>{{ link.icon }}</v-icon>
+            <v-icon>mdi-view-dashboard</v-icon>
             </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title>{{link.text}}</v-list-item-title>
+            <v-list-item-title>Dashboard</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item router-link to="/create" class="indigo--text">
+          <v-list-item-icon>
+            <v-icon>mdi-account-plus</v-icon>
+            </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Create User</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item router-link to="/view" v-on:click="viewUsers()" class="indigo--text">
+          <v-list-item-icon>
+            <v-icon>mdi-account-multiple</v-icon>
+            </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>View Users</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -68,5 +84,16 @@
         { icon: 'mdi-account-multiple', text: 'View Users', route: '/view' },
       ],
     }),
+    methods: {
+      viewUsers: function(){
+        this.$store.dispatch("viewUsers")
+        .then((success)=> {
+          console.log(success);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+      }
+    }
   }
 </script>

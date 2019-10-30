@@ -9,7 +9,7 @@
              <v-card-text class="text-center indigo--text">
                <h1>Last Updated Users</h1>
              </v-card-text>
-             <v-list v-for="user in users" :key="user.firstname">
+             <v-list v-for="user in View" :key="user.firstname">
                <v-list-item>
                  <v-list-content>{{ user.firstname }} {{ user.lastname }}</v-list-content>
                </v-list-item>
@@ -24,7 +24,7 @@
              </v-card-text>
              <v-list>
                <v-list-item>
-                 <v-list-content><h3 class="grey--text">5 registered Users</h3></v-list-content>
+                 <v-list-content><h3 class="grey--text">{{ this.$store.state.count}}</h3></v-list-content>
                </v-list-item>
              </v-list>
            </v-card>
@@ -48,6 +48,15 @@ export default {
       { firstname: 'Damola', lastname: 'Thomas' },
       { firstname: 'Caro', lastname: 'Bosede' }
     ]
-  })
+  }),
+  computed: {
+    View(){
+      return this.$store.state.users
+    }
+  },
+  created(){
+    this.$store.dispatch("viewUsers"),
+    this.$store.dispatch("Count")
+  }
 }
 </script>

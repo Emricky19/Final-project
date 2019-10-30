@@ -10,6 +10,7 @@ import BossStaff from '../views/BossStaff.vue'
 import Staff from '../views/Staff.vue'
 import StaffProject from '../views/StaffProject.vue'
 import FellowStaff from '../views/FellowStaff.vue'
+import Task from '../views/Task.vue'
 
 Vue.use(VueRouter)
 
@@ -63,6 +64,11 @@ const routes = [
     path: '/view/fellowstaff',
     name: 'fellow_staff',
     component: FellowStaff
+  },
+  {
+    path: '/tasks',
+    name: 'view-tasks',
+    component: Task
   },
 ]
 

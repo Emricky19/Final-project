@@ -3,7 +3,7 @@
     <Navbar />
     <!-- The grid system inside a card -->
     <v-container class="my-10">
-      <v-card flat class="pa-6 " v-for="user in users" :key="user.firstname">
+      <v-card flat class="pa-6 " v-for="user in View" :key="user.firstname">
         <v-layout row wrap>
           <v-flex xs12 md4>
             <div class="caption grey-text">Name</div>
@@ -15,11 +15,11 @@
           </v-flex>
           <v-flex xs6 sm4 md4>
             <div class="caption grey-text">Username</div>
-            <div>{{ user.Username }}</div>
+            <div>{{ user.username }}</div>
           </v-flex>
           <v-flex xs6 sm4 md2>
-            <div class="caption grey-text">Date created</div>
-            <div>{{ user.date_created }}</div>
+            <div class="caption grey-text">Phone</div>
+            <div>{{ user.phone }}</div>
           </v-flex>
         </v-layout>
         <!-- to seperate the contents in the card -->
@@ -50,6 +50,14 @@ export default {
       this.projects.sort((a,b) => a[prop] < b[prop] ? -1 : 1)
     }
   },
+  computed: {
+    View(){
+      return this.$store.state.users
+    }
+  },
+  created(){
+    this.$store.dispatch("viewUsers")
+  }
 };
 </script>
 <style scoped>

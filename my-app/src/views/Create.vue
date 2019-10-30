@@ -17,40 +17,49 @@
                         <v-form>
                         <v-text-field
                             label="Firstname"
-                            name="firstname"
                             type="text"
                             color="indigo"
+                            v-model="firstname"
                             outlined
                         ></v-text-field>
                         <v-text-field
                             label="Lastname"
-                            name="lastname"
                             type="text"
                             color="indigo"
+                            v-model="lastname"
                             outlined
                         ></v-text-field>
                          <v-select
                             :items="items"
                             label="Role"
+                            v-model="role"
                             outlined
                             ></v-select>
                         <v-text-field
                             label="Username"
-                            name="username"
                             type="text"
                             color="indigo"
+                            v-model="username"
                             outlined
                         ></v-text-field>
                         <v-text-field
                             id="password"
                             label="Password"
-                            name="password"
                             type="password"
                             color="indigo"
+                            v-model="password"
+                            outlined
+                        ></v-text-field>
+                        <v-text-field
+                            id="phone"
+                            label="Phone"
+                            type="text"
+                            color="indigo"
+                            v-model="phone"
                             outlined
                         ></v-text-field>
                         <v-card-text class="text-right">
-                            <v-btn depressed color="indigo" class="white--text" id="btn">
+                            <v-btn depressed color="indigo" class="white--text" id="btn" v-on:click="register()">
                                 Create User
                                 <v-icon right>
                                 mdi-plus
@@ -74,6 +83,38 @@ export default {
     },
     data: () => ({
         items: ['Admin', 'Boss', 'Staff'],
+        firstname:'',
+        lastname: '',
+        role:'',
+        username: '',
+        password: '',
+        phone: '',
+
     }),
+    methods: {
+        register(){
+            const firstname = this.firstname
+            const lastname = this.lastname
+            const role = this.role
+            const username = this.username
+            const password = this.password
+            const phone = this.phone
+
+            this.$store.dispatch('register', {
+                firstname,
+                lastname,
+                role,
+                username,
+                password,
+                phone
+            })
+            .then((success) => {
+                console.log(success); 
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+        }
+    }
 }
 </script>

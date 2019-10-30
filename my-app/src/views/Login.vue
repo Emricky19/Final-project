@@ -1,5 +1,20 @@
 <template>
   <v-app id="login">
+     <v-snackbar
+     top
+      v-model="snackbar"
+      :timeout="timeout"
+      color="error"
+    >
+      {{ text }}
+      <v-btn
+        color="white"
+        text
+        @click="snackbar = false"
+      >
+        Close
+      </v-btn>
+    </v-snackbar>
     <v-content>
       <v-container
         class="fill-height"
@@ -22,26 +37,28 @@
                 <v-form>
                   <v-text-field
                     label="Username"
-                    name="username"
                     prepend-inner-icon="mdi-account"
-                    type="text"
+                    type="email"
                     color="indigo"
                     outlined
+                    v-model="username"
                   ></v-text-field>
 
                   <v-text-field
                     id="password"
                     label="Password"
-                    name="password"
                     prepend-inner-icon="mdi-key-variant"
-                    type="password"
+                    :type="show1 ? 'text' : 'password'"
                     color="indigo"
                     outlined
+                    v-model="password"
+                    @click:append="show1 = !show1"
+                    :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                   ></v-text-field>
                 </v-form>
               </v-card-text>
                 <v-card-text class="text-center">
-                  <v-btn depressed color="indigo" class="white--text" id="btn" router-link to="/admin">
+                  <v-btn depressed color="indigo" class="white--text" id="btn" v-on:click="login()">
                     LOGIN
                     <v-icon right>
                       mdi-login
@@ -61,12 +78,42 @@
 
 <script>
   export default {
-    props: {
-      source: String,
-    },
     data: () => ({
       drawer: null,
+      username: '',
+      password: '',
+      snackbar: false,
+      text: "Enter valid username or password",
+      timeout: 9000,
+      show1: false,
     }),
+    methods: {
+      login: function(){
+        const username = this.username;
+        const password = this.password;
+
+        this.$store.dispatch("login",{
+          username,
+          password
+        })
+        .then((success) => {
+          console.log(success);
+          if(success.data[0].role == "Admin"){
+            this.$router.push("/admin");
+          }
+          else if(success.data[0].role == "Boss"){
+            this.$router.push("/boss");
+          }
+          else{
+            this.$router.push("/staff");
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          this.snackbar=true;
+        });
+      }
+    }
   }
 </script>
 <style scoped>
